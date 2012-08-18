@@ -5,32 +5,42 @@ describe "Static Pages" do
     let(:base_title) { "Ruby on Rails Tutorial Sample App" }
     subject { page }
 
+    shared_examples_for 'all_static_pages' do
+        it { should have_selector('h1', text: header_text) }
+        it { should have_selector('title', text: full_title_with_suffix(title_suffix)) }
+    end
+
     describe "Home page" do
         before { visit root_path }
 
-        it { should have_selector('h1', text: 'Sample App') }
-        it { should have_selector('title', text: full_title_with_suffix('')) }
+        let(:header_text) { 'Sample App' }
+        let(:title_suffix) { '' }
+        it_should_behave_like 'all_static_pages'
         it { should_not have_selector('title', text: full_title_with_suffix('Home')) }
     end
 
     describe "Help page" do
         before { visit help_path }
 
-        it { should have_selector('h1', text: 'Help') }
-        it { should have_selector('title', text: full_title_with_suffix('Help')) }
+        let(:header_text) { 'Help' }
+        let(:title_suffix) { 'Help' }
+
+        it_should_behave_like 'all_static_pages'
     end
 
     describe "About page" do
         before { visit about_path }
 
-        it { should have_selector('h1', text: 'About Us') }
-        it { should have_selector('title', text: full_title_with_suffix('About Us')) }
+        let(:header_text) { 'About Us' }
+        let(:title_suffix) { 'About Us' }
+        it_should_behave_like 'all_static_pages'
     end
 
     describe "Contact page" do
         before { visit contact_path }
 
-        it { should have_selector('h1', text: 'Contact Us') }
-        it { should have_selector('title', text: full_title_with_suffix("Contact Us")) }
+        let(:header_text) { 'Contact Us' }
+        let(:title_suffix) { 'Contact Us' }
+        it_should_behave_like 'all_static_pages'
     end
 end
